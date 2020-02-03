@@ -1,0 +1,8 @@
+allennlp
+torch-scatter
+torch-sparse
+torch-cluster
+torch_geometric
+xlsxwriter
+python-dotenv
+pytorch_pretrained_bert
