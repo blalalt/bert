@@ -18,25 +18,25 @@ class Bert(torch.nn.Module):
 
         self._dropout = torch.nn.Dropout(p=dropout)
         self._index = "tokens"
-        # self._train_layers = -1
+        self._train_layers = 3
         if trainable:
             self.fine_tune()
 
     def fine_tune(self):
-        # _until = -self._train_layers
-        # _list_models = list(self.bert_model.children())
-        # assert self._train_layers <= len(_list_models)
-        # for c in _list_models[_until:]:
-        #     for p in c.parameters():
-        #         p.requires_grad = True
-        #
-        # for c in _list_models[:_until]:
-        #     for p in c.parameters():
-        #         p.requires_grad = False
+        _until = -self._train_layers
+        _list_models = list(self.bert_model.children())
+        assert self._train_layers <= len(_list_models)
+        for c in _list_models[_until:]:
+            for p in c.parameters():
+                p.requires_grad = True
+
+        for c in _list_models[:_until]:
+            for p in c.parameters():
+                p.requires_grad = False
 
         # ALL parameters fine-tune
-        for param in self.bert_model.parameters():
-            param.requires_grad = True
+        # for param in self.bert_model.parameters():
+        #     param.requires_grad = True
 
     def get_output_dim(self):
         return self.bert_model.config.hidden_size
