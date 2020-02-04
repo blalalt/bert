@@ -13,7 +13,7 @@ from allennlp.training.learning_rate_schedulers import SlantedTriangular
 warnings.filterwarnings('ignore')
 
 log_path = '../log'
-learning_rate = 0.004
+learning_rate = 2e-5
 epoch = 100
 batch_size = 8
 cuda_device = 0 if torch.cuda.is_available() else -1
@@ -83,6 +83,7 @@ def train(model_name, data_name, build_graph):
         cuda_device=cuda_device,
     )
     trainer.train()
+    torch.save(model.state_dict(), "bert.pt")
 
 
 def main():
