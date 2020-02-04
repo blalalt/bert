@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 log_path = '../log'
 learning_rate = 0.004
 epoch = 100
-batch_size = 16
+batch_size = 8
 cuda_device = 0 if torch.cuda.is_available() else -1
 
 
