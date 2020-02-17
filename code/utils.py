@@ -10,21 +10,23 @@ import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from dotenv import load_dotenv, find_dotenv
+
 load_dotenv(find_dotenv())
 
 
 def sent_email(path: str, key: str):
-
     def _get_reult():
         results = []
         if os.path.exists(path):
             with open(path, encoding='utf8') as f:
                 for line in f.readlines():
                     if line.startswith('INFO') and \
-                        line.find(key) != -1:
+                            line.find(key) != -1:
                         results.append(line)
             return '\n'.join(results)
-        else: return False
+        else:
+            return False
+
     info = _get_reult()
     if not info: return
     time = datetime.datetime.now().strftime('%y%m%d %H:%M')
@@ -47,6 +49,7 @@ def sent_email(path: str, key: str):
     # print('发送成功')
     return
 
+
 def label_to_array(labels: List[str], all_labels: List[str]) -> np.ndarray:
     pass
 
@@ -59,6 +62,7 @@ def save_to_json(name: str, obj: Any, dir: str):
     with open(path, 'w', encoding='utf8') as f:
         json.dump(obj=obj, fp=f, ensure_ascii=False, indent=1)
 
+
 def save_to_txt(name: str, text: str, dir: str):
     file_name = name + '.txt'
     if not os.path.exists(dir):
@@ -66,6 +70,7 @@ def save_to_txt(name: str, text: str, dir: str):
     path = os.path.join(dir, file_name)
     with open(path, 'w', encoding='utf8') as f:
         f.write(text)
+
 
 def save_to_xlsx(name, values, header=None):
     wb = xlsxwriter.Workbook(name)
@@ -80,11 +85,13 @@ def save_to_xlsx(name, values, header=None):
 
     wb.close()
 
-def read_xlsx(file_path: str, header: bool = True, index: int=0):
+
+def read_xlsx(file_path: str, header: bool = True, index: int = 0):
     sheet = xlrd.open_workbook(filename=file_path).sheet_by_index(index)
     start = int(header)
     for row_index in range(start, sheet.nrows):
         yield sheet.row_values(rowx=row_index, start_colx=0)
+
 
 def read_csv(file_path: str, header: bool = True, filter: str = ','):
     with open(file_path, 'r', encoding='utf8') as f:
@@ -99,12 +106,14 @@ def read_json(file_path: str):
         obj = json.load(f)
     return obj
 
+
 def real_list_len(l: list) -> int:
     count = 0
     for item in l:
         if item != '':
             count += 1
     return count
+
 
 def get_abs_path(dir, fname):
     return os.path.join(dir, fname)
@@ -133,18 +142,20 @@ def save_predict_result(path, data, label, pred):
         values.append([d, t, p])
     save_to_xlsx(path, values)
 
+
 def get_logger(path, logger_name):
     logging.basicConfig(
-            handlers=[
-                logging.FileHandler(
-                        filename=path,
-                        mode='w',
-                        encoding='utf8'),
-            ],
-            level=logging.DEBUG
+        handlers=[
+            logging.FileHandler(
+                filename=path,
+                mode='w',
+                encoding='utf8'),
+        ],
+        level=logging.DEBUG
     )
     logger = logging.getLogger(logger_name)
     return logger
+
 
 def get_now_time():
     return datetime.datetime.now().strftime('%y%m%d %H:%M:%S')
@@ -156,3 +167,10 @@ def get_train_logger(log_path, model_name, data_name):
         os.makedirs(path)
     f = generate_time_file(path, 'log')
     return get_logger(f, model_name)
+
+
+def get_train_checkpoints(checkpoints_path, model_name, data_name):
+    path = os.path.join(checkpoints_path, model_name + '_' + data_name)
+    if not os.path.exists(path):
+        os.makedirs(path)
+    return
