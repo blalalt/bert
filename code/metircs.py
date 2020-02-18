@@ -78,8 +78,9 @@ class MultiLabelMetric(Metric):
         if self.total_count == 0:
             return 0
         logger.debug(
-                msg='Multi Metric: \n\t{}\n'.format(str(self))
+                msg='Metric: {}\n'.format(str(self))
         )
+        print('Metric: {}\n'.format(str(self)))
         res = self.metrics_score[0] / self.total_count
         if reset:
             self.reset()
@@ -89,7 +90,7 @@ class MultiLabelMetric(Metric):
         scores = []
         for name, score in zip(self.metrics_name, self.metrics_score):
             scores.append(str(name) + ': ' + str(score / self.total_count))
-        return '\n\t'.join(scores)
+        return '\t'.join(scores)
 
     def reset(self) -> None:
         self._reset()

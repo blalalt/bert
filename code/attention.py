@@ -39,7 +39,7 @@ class AmplifierAttention(torch.nn.Module):
         text_vec = self.text_proj(text_vec)
         attn = torch.matmul(text_vec, labels_vec.t())  # (b, num_stamp, num_labels)
         alpha = self.sigmoid(attn)  # (b, num_stamp, num_labels)
-        alpha = torch.where(alpha < threshold, 0, alpha)
+        alpha = torch.where(alpha < threshold, torch.zeros_like(alpha), alpha)
         alpha = self.softmax(alpha)
         weighted_encoding = torch.matmul(alpha, labels_vec)  # (b, num_stamp, label_input_dim)
         return weighted_encoding

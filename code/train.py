@@ -21,8 +21,8 @@ log_path = '../log'
 checkpoints_path = '../checkpoints'
 learning_rate = 2e-5
 epoch = 100
-batch_size = 8
-cuda_device = 0 if torch.cuda.is_available() else -1
+batch_size = 4
+cuda_device = 1 if torch.cuda.is_available() else -1
 
 
 class Classifier(Model):
@@ -98,7 +98,7 @@ def main():
     parser = OptionParser()
     parser.add_option('-a', '--attn', dest='attn_name', help="nor, neg, amp", default='nor')
     parser.add_option('-d', '--data', dest='data_name', help='aapd, rcv', default='aapd')
-    parser.add_option('-e', '--embed', dest='embed_name', help='glove, bert', default='glove')
+    parser.add_option('-e', '--embed', dest='embed_name', help='glove, bert_en, bert_zh', default='glove')
     # parser.add_option("-g", action="store_true", dest="graph", default=True)
     parser.add_option('-m', '--model', dest='model_name', help="lg, bert, lstm", default='lg')
 
@@ -108,7 +108,7 @@ def main():
     attn_name = options.attn_name
     model_name = options.model_name
 
-    if model_name == 'bert': embed_name = 'bert'
+    if model_name == 'bert': embed_name = 'bert_en'
     if model_name == 'lstm': embed_name = 'glove'
 
     train(model_name, embed_name, attn_name, data_name)
