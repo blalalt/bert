@@ -21,7 +21,7 @@ log_path = '../log'
 checkpoints_path = '../checkpoints'
 learning_rate = 2e-5
 epoch = 100
-batch_size = 16
+batch_size = 8
 cuda_device = 0 if torch.cuda.is_available() else -1
 
 

@@ -82,7 +82,7 @@ class DataLoader(DatasetReader):
         for text, label in _read_json_sample(self.data_path, fname):
             text = [t if type(t) == Token else Token(t)
                     for t in self.tokenizer.tokenize(text)]
-            if len(text) < 6: continue
+            # if len(text) < 6: continue
             yield self.text_to_instance(text, label)
 
     def _read_labels(self, fname='labels.json'):
