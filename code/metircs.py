@@ -80,10 +80,10 @@ class MultiLabelMetric(Metric):
         logger.debug(
                 msg='Metric: {}\n'.format(str(self))
         )
-        # print('Metric: {}\n'.format(str(self)))
-        logger.handlers[0].flush()
+        # logger.handlers[0].flush()
         res = self.metrics_score[0] / self.total_count
         if reset:
+            print('Metric: {}\n'.format(str(self)))
             self.reset()
         return res
 
