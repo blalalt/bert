@@ -64,7 +64,7 @@ class BertEncoder(torch.nn.Module):
 
         self._dropout = torch.nn.Dropout(p=dropout)
         self._index = "tokens"
-        self._train_layers = 4
+        self._train_layers = 3
         if trainable:
             self.fine_tune()
 
