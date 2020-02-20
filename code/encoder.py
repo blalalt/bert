@@ -99,5 +99,5 @@ class BertEncoder(torch.nn.Module):
         encoded, pooled = self.bert_model(input_ids=input_ids,
                                           token_type_ids=token_type_ids,
                                           attention_mask=input_mask)
-        encoded = self._dropout[encoded[-1]]
+        encoded = self._dropout(encoded[-1])
         return encoded
