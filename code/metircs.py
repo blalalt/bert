@@ -14,8 +14,8 @@ class MultiLabelMetric(Metric):
         super(MultiLabelMetric, self).__init__()
         self.threshold = threshold
         self.metrics_name = ['f1_score', 'recall', 'precision', 'hamming_loss',
+                             'zero_one_loss', 'ranking_loss', 'coverage_error',
                              'average_precision']
-        #  'ranking_loss','zero_one_loss', 'coverage_error',
         self._reset()
         self.average = 'micro'  # for f1, recall, precision and so on...
 
