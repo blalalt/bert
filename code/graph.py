@@ -37,7 +37,7 @@ def build_label_graph(instance_labels):
     for x in range(num_nodes):
         for y in range(num_nodes):
             if x == y:
-                continue
+                A[x][x] = 1
 
             if A[x][y] != 0:
                 source.append(x)

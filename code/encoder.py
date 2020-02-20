@@ -40,20 +40,23 @@ class GloveEncoder(torch.nn.Module):
             input_size=GLOVE_EMBEDDING_DIM,
             hidden_size=_out_dim
         ))
+        self._dropout = torch.nn.Dropout(0.5)
 
     def get_output_dim(self):
         return self.encoder.get_output_dim()
 
     def forward(self, tokens):
         e = self.embed(tokens)
-        return self.encoder(e, None)
+        en = self.encoder(e, None)
+        en = self._dropout(en)
+        return en
 
 
 class BertEncoder(torch.nn.Module):
     def __init__(self,
                  embedding_file,
                  vocab=None,
-                 dropout: float = 0.5,
+                 dropout: float = 0.4,
                  trainable: bool = True):
         super().__init__()
 
@@ -96,4 +99,5 @@ class BertEncoder(torch.nn.Module):
         encoded, pooled = self.bert_model(input_ids=input_ids,
                                           token_type_ids=token_type_ids,
                                           attention_mask=input_mask)
-        return encoded[-1]
+        encoded = self._dropout[encoded[-1]]
+        return encoded
